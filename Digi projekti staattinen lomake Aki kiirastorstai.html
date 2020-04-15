@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="keywords" content="HTML,CSS,XML,JavaScript,Jason">
+    <meta name="author" content="Aki Paloheimo, Samuli Rantanen, Aaro Syrjäläinen, Atte Virtanen">
+    <title> Hygienia kysely Haaga-Helian käviöille</title>
+    <link rel="stylesheet" type="text/css" href="theme.css">
+    <style>
+        label:hover {
+            color: orange;
+        }
+        
+        fieldset:hover {
+            color: mediumpurple;
+        }
+        
+        form {
+            font-size: 23px;
+            background-color: white;
+            padding: 67px;
+            border: 3px;
+            border-radius: 24px;
+        }
+        
+        input[type=radio] {
+            border: 1px;
+            width: 30%;
+            height: 3em;
+        }
+        
+        input[type=number] {
+            height: 30%;
+            padding-left: 54px;
+            font-size: 54px;
+            width: 30%;
+        }
+        
+        input[type=submit] {
+            height: 3em;
+            font-size: 24px;
+            color: black;
+        }
+        
+        label {
+            font-size: 44px;
+        }
+        
+        body {
+            font-family: "helvetica";
+            background-color: blanchedalmond;
+            padding-left: 67px;
+        }
+        
+        submit {
+            width: 5em;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <form>
+        <div id="lomake"> </div>
+        <h1>Hygieniakysely</h1>
+        <h3>Tällä kyselyllä haluamme kartoittaa Haaga Helian Pasilan opiskelijoiden (ja henkilökunnan) hygieniakäyttäytymistä.<br><br> Voidaksemme paremmin vastata panepidemioiden kuten Covid-2019 ja muiden leviävien sairauksien tuomaan uhkaan yhteisössämme, tutkimme tilannetta tällä kyselyllä. <br><br>Autathan meitä kaikkia vastaamalla tähän kyselyyn</h3>
+        <fieldset>
+            <h2>Sukupuoli</h2>
+            <input type="radio" id="male" name="gender" value="Mies">
+            <label for="male">Mies</label>
+            <br>
+            <input type="radio" id="female" name="gender" value="Nainen">
+            <label for="female">Nainen</label>
+            <br>
+            <input type="radio" id="other" name="gender" value="Muu">
+            <label for="other">Muu</label>
+        </fieldset>
+        <fieldset>
+            <h2>Kohteliaimmin tiedustelmme; Mikä on ikäsi numeroina?</h2>
+            <label for="quantity">Vuosina:</label>&nbsp;
+            <input type="number" id="quantity" name="quantity" min="10" max="99"> </fieldset>
+        <fieldset>
+            <h2>Pesetkö kätesi aina, kun käyt vessassa?</h2>
+            <input type="radio" id="Kyllä" name="Pesu" value="Kyllä">
+            <label for="Kyllä">Kyllä</label>
+            <br>
+            <input type="radio" id="En" name="Pesu" value="En">
+            <label for="En">En</label>
+        </fieldset>
+        <fieldset>
+            <h2>Käytätkö saippuaa, kun peset kädet?</h2>
+            <input type="radio" id="yes" name="Saippua" value="Kyllä">
+            <label for="yes">Kyllä</label>
+            <br>
+            <input type="radio" id="no" name="Saippua" value="En">
+            <label for="no">En</label>
+        </fieldset>
+        <fieldset>
+            <h2>Kuinka pitkään peset käsiäsi?</h2>
+            <label for="sec">Sekunteina:</label> &nbsp;
+            <input type="number" id="sec" name="sec" value="5">
+            <br> </fieldset>
+        <fieldset>
+            <h2>Käyttäisitkö käsidesinfiointihanoja/<br>kuivapesuhanoja käytävillä koulussa, jos niitä olisi?</h2>
+            <input type="radio" id="da" name="Jos" value="Kyllä">
+            <label for="da">Kyllä</label>
+            <br>
+            <input type="radio" id="njet" name="Jos" value="En">
+            <label for="njet">En</label>
+        </fieldset>
+        <fieldset>
+            <h2>Tiedätkö oikeaoppiset käsienpesutekniikat (THL:n ohjeistus)?</h2>
+            <input type="radio" id="ja" name="THL" value="Kyllä">
+            <label for="ja">Kyllä</label>
+            <br>
+            <input type="radio" id="nein" name="THL" value="En">
+            <label for="nein">En</label>
+        </fieldset>
+        <fieldset>
+            <h2>Onko saippuaa saatavilla aina, kun peset kädet?</h2>
+            <input type="radio" id="1" name="Saatavuus" value="Aina">
+            <label for="1">Aina</label>
+            <br>
+            <input type="radio" id="2" name="Saatavuus" value="Usein">
+            <label for="2">Usein</label>
+            <br>
+            <input type="radio" id="3" name="Saatavuus" value="Harvoin">
+            <label for="3">Harvoin</label>
+            <br>
+            <input type="radio" id="4" name="Saatavuus" value="Hyvin harvoin">
+            <label for="4">Hyvin Harvoin</label>
+        </fieldset>
+        <fieldset>
+            <h2>Onko paperia tai käsipyyhkeitä aina saatavilla, kun käy vessassa?</h2>
+            <input type="radio" id="5" name="Kuivaus" value="Aina">
+            <label for="5">Aina</label>
+            <br>
+            <input type="radio" id="6" name="Kuivaus" value="Usein">
+            <label for="6">Usein</label>
+            <br>
+            <input type="radio" id="7" name="Kuivaus" value="Harvoin">
+            <label for="7">Harvoin</label>
+            <br>
+            <input type="radio" id="8" name="Kuivaus" value="Hyvin harvoin">
+            <label for="8">Hyvin Harvoin</label>
+        </fieldset>
+        <fieldset>
+            <h2>Ovatko vessat sinun mielestäsi siistejä?</h2>
+            <input type="radio" id="9" name="Siisteys" value="Aina">
+            <label for="9">Aina</label>
+            <br>
+            <input type="radio" id="10" name="Siisteys" value="Usein">
+            <label for="10">Usein</label>
+            <br>
+            <input type="radio" id="11" name="Siisteys" value="Harvoin">
+            <label for="11">Harvoin</label>
+            <br>
+            <input type="radio" id="12" name="Siisteys" value="Hyvin harvoin">
+            <label for="12">Hyvin Harvoin</label>
+            <br> </fieldset>
+        <br>
+        <br>
+        <input type="submit" value="Submit - Lähetä"> </form>
+    <p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p>
+    <script>
+        var lomakekentta = [];
+        //-	haetaan sitten getJSON:n avulla JSON-muotoinen data:
+        $.getJSON(" http://www.mocky.io/v2/5e96b0353000007600b6d66b", function (data) {
+            // tähän sijoitetaan lomakkeen muodostus
+        });
+        //-	määritellään taulukko, johon kysymykset ja html-elementit viedään push-metodilla:
+        var items = [];
+        //-	haetaan kyselyn otsikko, jos sellaisen on olemassa, ja viedään se push:lla items-taulukkoon esim. 
+        var otsikko = data.kysely;
+        items.push("<h2>" + otsikko + "</h2>");
+        //-	jos kysymykset on taulukon (hakasulkeet) sisällä:
+        var kysymykset = data.kysymykset;
+        //-	käydään jokainen taulukon kysymys läpi: 
+        $.each(kysymykset, function (key, d) {
+            // kysymysten käsittely 
+        });
+        //-	lisätään kysymysten käsittely:
+        //o	id-tunnuksen vieminen lomakekenttä-taulukkoon push-metodilla
+        //o	kysymystekstin vieminen items-taulukkoon push-metodilla
+        //o	lomake-elementin muodostus attribuutteineen ja vieminen items-taulukkoon push-metodilla
+        //o	käytetään if-lausetta eri kysymystyyppien erilaiseen käsittelyyn:
+        if (d.tyyppi == "text") {
+            // kysymyksen ja lomake-elementin vieminen items-taulukkoon 
+        }
+        //o	malli monivalintojen eri valintavaihtoehtojen tuomiseen sivulle. Monivalinnoissa tarvitaan name-attribuuttia yhteisen ryhmän muodostamiseen yhdelle monivalintakysymykselle. Tässä mallissa name-attribuutti saa arvokseen id-tunnuksen arvon:
+        for (i = 0; i < d.value.length; i++) {
+            items.push("<input type=" + d.tyyppi + " id= " + d.id + " name=" + d.id + " value=" + d.value[i] + ">" + d.value[i] + "<br>");
+        }
+        //-	lisätään kysymysten jälkeen (ei enää kysymysten käsittely-osioon vaan sen perään) sivulle tuleva painike, jossa on onclick-toiminolla funktiokutsu laheta-funktioon. Vaihtoehtoisesti painikkeen voi toki kirjoittaa suoraan form-lomakkeeseen.
+        //-	lisätään vielä items-taulukon sisällön (eli kysymykset ja lomake-elementit attribuutteineen) kirjoittaminen form-elementin sisällä olevaan div-elementtiin:
+        $("#lomake").append(items.join(""));
+    </script>
+</body>
+
+</html>

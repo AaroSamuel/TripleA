@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="keywords" content="HTML,CSS,XML,JavaScript,Jason">
+    <meta name="author" content="Aki Paloheimo, Samuli Rantanen, Aaro Syrjäläinen, Atte Virtanen">
+    <title> Hygienia kysely Haaga-Helian käviöille</title>
+    <link rel="stylesheet" type="text/css" href="theme.css">
+    <style>
+        label:hover {
+            color: orange;
+        }
+        
+        fieldset:hover {
+            color: mediumpurple;
+        }
+        
+        form {
+            font-size: 23px;
+            background-color: white;
+            padding: 67px;
+            border: 3px;
+            border-radius: 24px;
+        }
+        
+        input[type=radio] {
+            border: 1px;
+            width: 30%;
+            height: 3em;
+        }
+        
+        input[type=number] {
+            height: 30%;
+            padding-left: 54px;
+            font-size: 54px;
+            width: 30%;
+        }
+        
+        input[type=submit] {
+            height: 3em;
+            font-size: 24px;
+            color: black;
+        }
+        
+        label {
+            font-size: 44px;
+        }
+        
+        body {
+            font-family: "helvetica";
+            background-color: blanchedalmond;
+            padding-left: 67px;
+        }
+        
+        submit {
+            width: 5em;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <form>
+        <div id="lomake"> </div>
+        <br>
+        <br>
+        <input type="submit" value="Submit - Lähetä"> </form>
+    <script>
+        var lomakekentta = [];
+        //-	haetaan sitten getJSON:n avulla JSON-muotoinen data:
+        $.getJSON("http://www.mocky.io/v2/5e9ed6862d00006100cb77d2", function (data) {
+            var items = [];
+            //-	haetaan kyselyn otsikko, jos sellaisen on olemassa, ja viedään se push:lla items-taulukkoon esim. 
+            var otsikko = data.kyselyn_otsikko;
+            items.push("<h2>" + otsikko + "</h2>");
+            //-	jos kysymykset on taulukon (hakasulkeet) sisällä:
+            var kysymykset = data.kysymykset;
+            //-	käydään jokainen taulukon kysymys läpi: 
+            $.each(kysymykset, function (key, d) {
+                items.push("<h3>" + d.Kysymys + "</h3>");
+                if (d.tyyppi == "radio") {
+                    for (i = 0; i < d.value.length; i++) {
+                        items.push("<input type=" + d.tyyppi + " id= " + d.id + " name=" + d.id + " value=" + d.value[i] + ">" + d.value[i] + "<br>");
+                    }
+                }
+                if (d.tyyppi == "number") {
+                    items.push("<input type=" + d.tyyppi + " id= " + d.id + " > <br>");
+                }
+                // kysymysten käsittely 
+            });
+            $("#lomake").append(items.join(""));
+        });
+
+        function laheta() {
+            //lisää tähän lomakenttien value-arvojen hakeminen
+            //muuta id-tunnukset ja value-arvot JSON-muotoon
+            //tulosta alert-ikkunassa ja lähetä JSON-muotoinen data 
+        }
+        for (i = 0; i < lomakekentta.length; i++) {
+            // lisätään tähän tietojen hakeminen lomakekentistä
+        }
+        lomakekentta[i];
+        tyyppi = document.getElementById(lomakekentta[i]).type;
+        var radios = document.getElementsByName(lomakekentta[i]);
+        for (var x = 0, length = radios.length; x < length; x++) {
+            if (radios[x].checked) {
+                vastaus = radios[x].value;
+            }
+        }
+        var myJSON = JSON.stringify(jsonData);
+        $.ajax({
+            url: 'url_osoite_mihin_lähetetään'
+            , type: 'POST'
+            , dataType: 'application/json'
+            , contentType: 'application/json'
+            , data: myJSON
+            , success: function () {
+                alert('POST completed. Data:' + myJSON)
+            }
+            , error: function (xhr, status, error) {
+                console.log(xhr.statusText);
+                console.log(status);
+                console.log(error);
+            }
+        });
+    </script>
+</body>
+
+</html>

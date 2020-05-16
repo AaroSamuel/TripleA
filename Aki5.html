@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="keywords" content="HTML,CSS,XML,JavaScript,Jason">
+    <meta name="author" content="Aki Paloheimo, Samuli Rantanen, Aaro Syrjäläinen, Atte Virtanen">
+    <title> Hygienia kysely Haaga-Helian käviöille</title>
+    <link rel="stylesheet" type="text/css" href="theme.css">
+	
+    <style>
+        div:hover {
+            color: mediumpurple;
+        }
+        
+        h2:hover {
+            color: mediumvioletred;
+        }
+        
+        h3:hover {
+            color: orange;
+        }
+        
+        form {
+            font-size: 26px;
+            background-color: white;
+            padding: 67px;
+            border: 3px;
+            border-radius: 24px;
+        }
+        
+        input[type=radio] {
+            border: 1px;
+            width: 30%;
+            height: 3em;
+            caret-color: aquamarine;
+        }
+        
+        input[type=number] {
+            height: 30%;
+            padding-left: 54px;
+            font-size: 34px;
+            width: 30%;
+            color: #0027ff;
+        }
+        
+        input[type=submit] {
+            height: 3em;
+            font-size: 24px;
+            color: black;
+        }
+        
+        label {
+            font-size: 32px;
+        }
+        
+        body {
+            font-family: "helvetica";
+            background-color: blanchedalmond;
+            padding-left: 67px;
+        }
+        
+        submit {
+            width: 5em;
+        }
+    </style> <script type="text/javascript" async="" src="Aki5_files/analytics.js"></script><script src="Aki5_files/jquery.js"></script>
+	
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-165576789-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-165576789-1');
+    </script>
+	
+</head>
+
+<body>
+    <form>
+        <div id="lomake"> </div>
+        <br>
+        <br>
+        <input type="submit" value="Submit - Lähetä" onclick="tallennus()"> </form>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
+        <script>
+            // Your web app's Firebase configuration
+            var firebaseConfig = {
+                apiKey: "AIzaSyDmUWis5tiG0NCVLCTI5YlMZcQSGenydfw"
+                , authDomain: "newsaki-icveon.firebaseapp.com"
+                , databaseURL: "https://newsaki-icveon.firebaseio.com"
+                , projectId: "newsaki-icveon"
+                , storageBucket: "newsaki-icveon.appspot.com"
+                , messagingSenderId: "1028505778721"
+                , appId: "1:1028505778721:web:b93ec03e3adbcdcee68160"
+                , measurementId: "G-C4BWH3ZZ52"
+            };
+     // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            var db = firebase.firestore();
+			
+        var lomakekentta = [];
+		
+        //-	haetaan sitten getJSON:n avulla JSON-muotoinen data:
+         $.getJSON("http://www.mocky.io/v2/5eb1581c320000660028f624", function (data) {
+            var items = [];
+            //-	haetaan kyselyn otsikko, jos sellaisen on olemassa, ja viedään se push:lla items-taulukkoon esim. 
+            var otsikko = data.kyselyn_otsikko;
+            items.push("<h2>" + otsikko + "</h2>");
+            //-	jos kysymykset on taulukon (hakasulkeet) sisällä:
+            var kysymykset = data.kysymykset;
+            //-	käydään jokainen taulukon kysymys läpi: 
+			 
+            $.each(kysymykset, function (key, d) {
+                items.push("<h3>" + d.Kysymys + "</h3>");
+                if (d.tyyppi == "radio") {
+                    for (i = 0; i < d.value.length; i++) {
+                        items.push("<input type=" + d.tyyppi + " id= " + d.id + " name=" + d.id + " value=" + d.value[i] + ">" + d.value[i] + "<br>");
+                    }
+					lomakekentta.push(d.id)
+                }
+                if (d.tyyppi == "number") {
+                    items.push("<input type=" + d.tyyppi + " id=" + d.id + " > <br>");
+                   
+					lomakekentta.push(d.id)
+                }
+                // kysymysten käsittely 
+            });
+            $("#lomake").append(items.join(""));
+        });
+
+        function tallennus() {
+			var vastaus;
+            
+            for (i = 0; i < lomakekentta.length; i++) {
+                  
+                var tyyppi =document.getElementById(lomakekentta[i]).type;
+                  alert(i + tyyppi);
+								if (tyyppi=="number"){
+         vastaus=document.getElementById(lomakekentta[i]).value;
+            
+			db.collection("vastaukset").add({
+                    vastaus:vastaus, id: lomakekentta[i]        
+                }).then(function (docRef) {
+                    console.log("Document written with ID: ", docRef.id);
+                    location.reload(); // päivittää sivun
+                }).catch(function (error) {
+                    console.error("Error adding document: ", error);
+                });
+				alert(lomakekentta[i]+vastaus)}
+				
+
+				if (tyyppi=="radio"){
+					
+				
+					var radios = document.getElementsByName(lomakekentta[i]);
+         for (var x = 0, length = radios.length; x < length; x++){
+        if (radios[x].checked){ 
+               vastaus=radios[x].value;
+               
+            
+               db.collection("vastaukset").add({
+                    vastaus:vastaus, id: lomakekentta[i]
+                    
+                }).then(function (docRef) {
+                    console.log("Document written with ID: ", docRef.id);
+                    location.reload(); // päivittää sivun
+                }).catch(function (error) {
+                    console.error("Error adding document: ", error);
+                });
+			        alert(vastaus)}
+        }}
+                // lisätään tähän tietojen hakeminen lomakekentistä
+            }
+        }
+		
+
+    </script>
+
+</body></html>
